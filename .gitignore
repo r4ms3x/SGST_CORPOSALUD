@@ -48,7 +48,7 @@ Vagrantfile
 #-------------------------
 # Temporary Files
 #-------------------------
-/writable/*
+# /writable/*
 writable/cache/*
 !writable/cache/index.html
 
@@ -85,7 +85,7 @@ phpunit
 #-------------------------
 # Composer
 #-------------------------
-vendor/
+# vendor/
 
 #-------------------------
 # IDE / Development Files

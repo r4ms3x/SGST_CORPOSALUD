@@ -1,635 +1,726 @@
 <?= $this->extend('layouts/main_layout') ?>
+
 <style>
-    /* Forzar que las flechas siempre sean visibles y funcionales */
     .carousel-control-prev,
     .carousel-control-next {
-        opacity: 0.8 !important; /* Que se vean claritas pero constantes */
+        opacity: 0.8 !important;
         z-index: 5;
+        width: 5%;
+        background: rgba(0,0,0,0.1);
     }
-.carousel-inner {
-        padding-left: 40px;
-        padding-right: 40px;
+    .carousel-inner {
+        padding-left: 60px;
+        padding-right: 60px;
     } 
     .carousel-control-prev:hover,
     .carousel-control-next:hover {
-        opacity: 1 !important; /* Que brillen al pasar el mouse */ 
-        background: rgba(0,0,0,0.1); /* Un fondo sutil para saber que son botones */
+        opacity: 1 !important;
+        background: rgba(0,0,0,0.2);
     }
-    /* Asegura que el carrusel no colapse si está vacío */
     .carousel-inner {
-        min-height: 150px;
+        min-height: 400px;
     }
-
-    /* Mantiene las flechas visibles */ 
-    .carousel-control-prev, .carousel-control-next {
-        z-index: 10;
-        opacity: 0.5;
+    .carousel-item {
+        text-align: center;
     }
-    
-    .carousel-control-prev:hover, .carousel-control-next:hover {
-        opacity: 1;
+    .carousel-item .d-flex {
+        justify-content: center !important;
+        flex-wrap: wrap;
     }
-
-</style>
-<?php //--------------------------------- MENU DE OPCIONES ------------------------------------?>
-<?= $this->section('menu_options') ?>
-  <li class="nav-item">
-    <a href="<?= base_url('admin/tickets') ?>" class="nav-link">
-      <i class="nav-icon fas fa-tachometer-alt"></i>
-      <p>Inicio</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
-      <i class="nav-icon fas fa-user-cog"></i>
-      <p>Gestionar Técnicos</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
-      <i class="nav-icon fas fa-users"></i>
-      <p>Gestionar Usuarios</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/reportes') ?>" class="nav-link">
-      <i class="nav-icon fas fa-chart-line"></i>
-      <p>Estadísticas</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
-      <i class="nav-icon fas fa-history"></i>
-      <p>Historial</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
-      <i class="nav-icon fas fa-calendar-alt"></i>
-      <p>Agenda</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
-      <i class="nav-icon fas fa-fingerprint"></i>
-      <p>Auditoria</p>
-    </a>
-  </li>
-
-  <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
-      <i class="nav-icon fas fa-book"></i>
-      <p>Documentacion</p>
-    </a>
-  </li>
-
-   <li class="nav-item">
-    <a href="<?= base_url('logout') ?>" class="nav-link text-danger">
-        <i class="nav-icon fas fa-sign-out-alt"></i>
-        <p>Cerrar Sesión</p>
-    </a>
-</li>
-
-<?= $this->endSection() ?>
-<?php //------------------------------------CONTENIDO DE LA PAGINA----------------------------------  ?>
-<?= $this->section('content') ?>
-  <div class="container-fluid">
-    <h1>Gestión de Tickets</h1>
-    <p>Bienvenido al control total del soporte técnico.</p>
-  </div>
-  <div class="container-fluid">
-    
-
-    <h5 class="mt-4 mb-2">En espera</h5>
-    <?php // ------------------------------CARRUSEL "EN ESPERA"--------------------------- ?>
-<div id="carruselEnEspera" class="carousel slide" data-ride="carousel" data-interval="false">
-    <div class="carousel-inner">
-        
-        <div class="carousel-item active">
-            <div class="d-flex justify-content-start">
-                <div class="card bg-info m-2 ticket-clickable" style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                 data-toggle="modal" 
-                 data-target="#modalAsignarTicket">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3"><i class="fas fa-ticket-alt"></i> Ticket #001</h5>
-                        <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                        <div class="mb-2">
-                            <small class="d-block"><i class="fas fa-user fa-fw"></i> Usuario: Juan P.</small>
-                            <small class="d-block text-white-50"><i class="fas fa-layer-group fa-fw"></i> Módulo: Inventario</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="card bg-warning m-2 ticket-clickable" style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                 data-toggle="modal" 
-                 data-target="#modalAsignarTicket">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3"><i class="fas fa-ticket-alt"></i> Ticket #001</h5>
-                        <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                        <div class="mb-2">
-                            <small class="d-block"><i class="fas fa-user fa-fw"></i> Usuario: Juan P.</small>
-                            <small class="d-block text-white-50"><i class="fas fa-layer-group fa-fw"></i> Módulo: Inventario</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="card bg-info m-2 ticket-clickable" style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                 data-toggle="modal" 
-                 data-target="#modalAsignarTicket">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3"><i class="fas fa-ticket-alt"></i> Ticket #001</h5>
-                        <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                        <div class="mb-2">
-                            <small class="d-block"><i class="fas fa-user fa-fw"></i> Usuario: Juan P.</small>
-                            <small class="d-block text-white-50"><i class="fas fa-layer-group fa-fw"></i> Módulo: Inventario</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="card bg-danger m-2 ticket-clickable" style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                 data-toggle="modal" 
-                 data-target="#modalAsignarTicket">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3"><i class="fas fa-ticket-alt"></i> Ticket #001</h5>
-                        <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                        <div class="mb-2">
-                            <small class="d-block"><i class="fas fa-user fa-fw"></i> Usuario: Juan P.</small>
-                            <small class="d-block text-white-50"><i class="fas fa-layer-group fa-fw"></i> Módulo: Inventario</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <div class="d-flex justify-content-start">
-                <div class="card bg-warning m-2 ticket-clickable" style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                 data-toggle="modal" 
-                 data-target="#modalAsignarTicket">
-                    <div class="card-body">
-                        <h5 class="card-title mb-3"><i class="fas fa-ticket-alt"></i> Ticket #001</h5>
-                        <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                        <div class="mb-2">
-                            <small class="d-block"><i class="fas fa-user fa-fw"></i> Usuario: Juan P.</small>
-                            <small class="d-block text-white-50"><i class="fas fa-layer-group fa-fw"></i> Módulo: Inventario</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <a class="carousel-control-prev" href="#carruselEnEspera" role="button" data-slide="prev" style="width: 5%; background: rgba(0,0,0,0.1);">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </a>
-    <a class="carousel-control-next" href="#carruselEnEspera" role="button" data-slide="next" style="width: 5%; background: rgba(0,0,0,0.1);">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </a>
-</div>
-
-    <h5 class="mt-4 mb-2">En Revision</h5>
-    <?php // --------------------------CARRUSEL "EN REVISION"------------------------------- ?>
-<div id="carruselRevision" class="carousel slide" data-ride="carousel" data-interval="false">
-    <div class="carousel-inner">
-        
-        <div class="carousel-item active">
-            <div class="d-flex justify-content-start">
-
-                <div class="card bg-gradient-teal m-2 ticket-clickable" 
-                     style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                    data-toggle="modal" 
-                    data-target="#modalEditarRevision"> <div class="card-body text-dark"> <h5 class="card-title mb-3"><i class="fas fa-sync-alt fa-spin"></i> Ticket #001</h5>
-                       <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                   <div class="mt-2">
-                      <small class="d-block"><strong>Técnicos:</strong> Carlos R., María L.</small>
-                     <small class="d-block"><strong>Tiempo:</strong> 30 min</small>
-                 </div>
-                                                  </div>
-                  </div>
-
-                <div class="card bg-gradient-teal m-2 ticket-clickable" 
-                     style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                    data-toggle="modal" 
-                    data-target="#modalEditarRevision"> <div class="card-body text-dark"> <h5 class="card-title mb-3"><i class="fas fa-sync-alt fa-spin"></i> Ticket #001</h5>
-                       <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                   <div class="mt-2">
-                      <small class="d-block"><strong>Técnicos:</strong> Carlos R., María L.</small>
-                     <small class="d-block"><strong>Tiempo:</strong> 30 min</small>
-                 </div>
-                                                  </div>
-                  </div>
-
-                <div class="card bg-gradient-teal m-2 ticket-clickable" 
-                     style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                    data-toggle="modal" 
-                    data-target="#modalEditarRevision"> <div class="card-body text-dark"> <h5 class="card-title mb-3"><i class="fas fa-sync-alt fa-spin"></i> Ticket #001</h5>
-                       <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                   <div class="mt-2">
-                      <small class="d-block"><strong>Técnicos:</strong> Carlos R., María L.</small>
-                     <small class="d-block"><strong>Tiempo:</strong> 30 min</small>
-                 </div>
-                                                  </div>
-                  </div>
-
-                <div class="card bg-gradient-teal m-2 ticket-clickable" 
-                     style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                    data-toggle="modal" 
-                    data-target="#modalEditarRevision"> <div class="card-body text-dark"> <h5 class="card-title mb-3"><i class="fas fa-sync-alt fa-spin"></i> Ticket #001</h5>
-                       <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                   <div class="mt-2">
-                      <small class="d-block"><strong>Técnicos:</strong> Carlos R., María L.</small>
-                     <small class="d-block"><strong>Tiempo:</strong> 30 min</small>
-                 </div>
-                                                  </div>
-                  </div>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <div class="d-flex justify-content-start">
-                <div class="card bg-gradient-teal m-2 ticket-clickable" 
-                     style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                    data-toggle="modal" 
-                    data-target="#modalEditarRevision"> <div class="card-body text-dark"> <h5 class="card-title mb-3"><i class="fas fa-sync-alt fa-spin"></i> Ticket #001</h5>
-                       <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                   <div class="mt-2">
-                      <small class="d-block"><strong>Técnicos:</strong> Carlos R., María L.</small>
-                     <small class="d-block"><strong>Tiempo:</strong> 30 min</small>
-                 </div>
-                                                  </div>
-                  </div>
-            </div>
-        </div>
-
-    </div>
-
-    <a class="carousel-control-prev" href="#carruselRevision" role="button" data-slide="prev" style="width: 5%; background: rgba(0,0,0,0.1);">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </a>
-    <a class="carousel-control-next" href="#carruselRevision" role="button" data-slide="next" style="width: 5%; background: rgba(0,0,0,0.1);">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </a>
-</div>
-
-    <h5 class="mt-4 mb-2">Completado</h5>
-    <?php // --------------------------CARRUSEL "COMPLETADO" -----------------------------?>
-<div id="carruselCompletado" class="carousel slide" data-ride="carousel" data-interval="false">
-    <div class="carousel-inner">
-        
-        <div class="carousel-item active">
-            <div class="d-flex justify-content-start">
-
-                <div class="card bg-success m-2 ticket-clickable" 
-                      style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                       data-toggle="modal" 
-                      data-target="#modalTicketCompletado">
-                      <div class="card-body">
-                          <h5 class="card-title mb-3"><i class="fas fa-check-double"></i> Ticket #001</h5>
-                          <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                              <div class="mt-2">
-                                 <small class="d-block text-white-50">Completado por usuario: 14:30 PM</small>
-                              </div>
-                      </div>
-                  </div>
-
-                <div class="card bg-success m-2 ticket-clickable" 
-                      style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                       data-toggle="modal" 
-                      data-target="#modalTicketCompletado">
-                      <div class="card-body">
-                          <h5 class="card-title mb-3"><i class="fas fa-check-double"></i> Ticket #001</h5>
-                          <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                              <div class="mt-2">
-                                 <small class="d-block text-white-50">Completado por usuario: 14:30 PM</small>
-                              </div>
-                      </div>
-                  </div>
-
-                  <div class="card bg-success m-2 ticket-clickable" 
-                      style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                       data-toggle="modal" 
-                      data-target="#modalTicketCompletado">
-                      <div class="card-body">
-                          <h5 class="card-title mb-3"><i class="fas fa-check-double"></i> Ticket #001</h5>
-                          <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                              <div class="mt-2">
-                                 <small class="d-block text-white-50">Completado por usuario: 14:30 PM</small>
-                              </div>
-                      </div>
-                  </div>
-
-                <div class="card bg-success m-2 ticket-clickable" 
-                      style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                       data-toggle="modal" 
-                      data-target="#modalTicketCompletado">
-                      <div class="card-body">
-                          <h5 class="card-title mb-3"><i class="fas fa-check-double"></i> Ticket #001</h5>
-                          <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                              <div class="mt-2">
-                                 <small class="d-block text-white-50">Completado por usuario: 14:30 PM</small>
-                              </div>
-                      </div>
-                  </div>
-
-                <div class="card bg-success m-2 ticket-clickable" 
-                      style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                       data-toggle="modal" 
-                      data-target="#modalTicketCompletado">
-                      <div class="card-body">
-                          <h5 class="card-title mb-3"><i class="fas fa-check-double"></i> Ticket #001</h5>
-                          <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                              <div class="mt-2">
-                                 <small class="d-block text-white-50">Completado por usuario: 14:30 PM</small>
-                              </div>
-                      </div>
-                  </div>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <div class="d-flex justify-content-start">
-                <div class="card bg-success m-2 ticket-clickable" 
-                      style="width: 18rem; flex: 0 0 auto; border-radius: 10px;"
-                       data-toggle="modal" 
-                      data-target="#modalTicketCompletado">
-                      <div class="card-body">
-                          <h5 class="card-title mb-3"><i class="fas fa-check-double"></i> Ticket #001</h5>
-                          <p class="card-text mb-1"><strong>Falla:</strong> Falla Impresora</p>
-                              <div class="mt-2">
-                                 <small class="d-block text-white-50">Completado por usuario: 14:30 PM</small>
-                              </div>
-                      </div>
-                  </div>
-            </div>
-        </div>
-
-    </div>
-
-    <a class="carousel-control-prev" href="#carruselCompletado" role="button" data-slide="prev" style="width: 5%; background: rgba(0,0,0,0.1);">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    </a>
-    <a class="carousel-control-next" href="#carruselCompletado" role="button" data-slide="next" style="width: 5%; background: rgba(0,0,0,0.1);">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    </a>
-</div>
-        </div>
-</div>
-<?php // ------------------------------------------------INICIO MODALES ----------------------------------------------------?>
-
-<?php //------------------------------- MODAL DE EN ESPERA---------------------- ?>
-<div class="modal fade" id="modalAsignarTicket" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-dark">
-                <h5 class="modal-title text-white" id="exampleModalLabel text-white">Detalles del Ticket #001</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row mb-3">
-                    <div class="col-6"><strong>Falla:</strong> <span id="infoFalla">Falla Impresora</span></div>
-                    <div class="col-6"><strong>Módulo:</strong> <span id="infoModulo">Inventario</span></div>
-                    <div class="col-6 mt-2"><strong>Usuario:</strong> <span id="infoUsuario">Juan Pérez</span></div>
-                </div>
-
-                <hr>
-
-                <form id="formAsignar">
-                    <div class="form-group">
-    <label><i class="fas fa-user-cog"></i> Asignar Técnicos</label>
-    <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto; background-color: #f8f9fa;">
-        
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec1" name="tecnicos[]" value="1">
-            <label for="tec1" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span>Carlos Ruiz</span>
-            </label>
-        </div>
-
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec2" name="tecnicos[]" value="2">
-            <label for="tec2" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span>María López</span>
-            </label>
-        </div>
-
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec3" name="tecnicos[]" value="3">
-            <label for="tec3" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span>José García</span>
-            </label>
-        </div>
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec4" name="tecnicos[]" value="4">
-            <label for="tec4" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span>Fulanito</span>
-            </label>
-        </div>
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec5" name="tecnicos[]" value="5">
-            <label for="tec5" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span>Tiana Maria</span>
-            </label>
-        </div>
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec6" name="tecnicos[]" value="6">
-            <label for="tec6" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span> Geovanny Vasquez</span>
-            </label>
-        </div>
-        <div class="custom-control custom-checkbox mb-2">
-            <input class="custom-control-input" type="checkbox" id="tec7" name="tecnicos[]" value="7">
-            <label for="tec7" class="custom-control-label d-flex justify-content-between align-items-center">
-                <span>Pibble</span>
-            </label>
-        </div>
-    </div>
-    <small class="text-muted">Puedes seleccionar uno o varios técnicos para este caso.</small>
-</div>
-
-                    <div class="form-group">
-                        <label for="tiempo"><i class="fas fa-clock"></i> Tiempo estimado de atención</label>
-                        <select class="form-control" id="tiempo" name="tiempo">
-                            <option>15 minutos</option>
-                            <option>30 minutos</option>
-                            <option>1 hora</option>
-                            <option>2 horas</option>
-                            <option>Urgente (Atención inmediata)</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary">Asignar y Mover a Revisión</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php //--------------------------- MODAL DE REVISION ----------------------------?>
-<div class="modal fade" id="modalEditarRevision" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-warning">
-                <h5 class="modal-title text-dark font-weight-bold">Gestionar Revisión: Ticket #001</h5>
-                <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="alert alert-light border">
-                    <div class="row">
-                        <div class="col-6"><strong>Falla:</strong> <p>Falla Impresora</p></div>
-                        <div class="col-6"><strong>Módulo:</strong> <p>Inventario</p></div>
-                        <div class="col-12"><strong>Usuario:</strong> <p>Juan Pérez</p></div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <form id="formEditarRevision">
-                    <div class="form-group">
-                        <label class="text-primary"><i class="fas fa-user-edit"></i> Modificar Técnicos Asignados</label>
-                        <div class="border rounded p-3 bg-white" style="max-height: 150px; overflow-y: auto;">
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec1" name="tecnicos[]" checked>
-                                <label for="editTec1" class="custom-control-label">Carlos Ruiz</label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec2" name="tecnicos[]" checked>
-                                <label for="editTec2" class="custom-control-label">María López</label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec3" name="tecnicos[]">
-                                <label for="editTec3" class="custom-control-label">José García</label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec4" name="tecnicos[]">
-                                <label for="editTec4" class="custom-control-label">Tiana Maria</label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec5" name="tecnicos[]">
-                                <label for="editTec5" class="custom-control-label">Geovanny Vasquez</label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec6" name="tecnicos[]">
-                                <label for="editTec6" class="custom-control-label">Pibble</label>
-                            </div>
-                            <div class="custom-control custom-checkbox mb-2">
-                                <input class="custom-control-input" type="checkbox" id="editTec7" name="tecnicos[]">
-                                <label for="editTec7" class="custom-control-label">Fulanito</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-3">
-                        <label class="text-primary"><i class="fas fa-hourglass-half"></i> Actualizar Tiempo Estimado</label>
-                        <select class="form-control" name="tiempo">
-                            <option>15 minutos</option>
-                            <option selected>30 minutos</option> <option>1 hora</option>
-                            <option>2 horas</option>
-                            <option>Retrasado (Más de 3 horas)</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                <div>
-                    <button type="submit" form="formEditarRevision" class="btn btn-warning text-dark font-weight-bold">Actualizar Datos</button>
-                    <button type="button" class="btn btn-success ml-2">Finalizar Ticket</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<?php // ---------------MODAL DE COMPLETADO ---------------- ?>
-<div class="modal fade" id="modalTicketCompletado" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document"> <div class="modal-content">
-            <div class="modal-header bg-success">
-                <h5 class="modal-title text-white">Resumen de Finalización: Ticket #001</h5>
-                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="row border-bottom pb-3 mb-3">
-                    <div class="col-md-4">
-                        <label class="text-muted">Información Básica</label>
-                        <p><strong>Usuario:</strong> Juan Pérez</p>
-                        <p><strong>Módulo:</strong> Inventario</p>
-                    </div>
-                    <div class="col-md-4">
-                        <label class="text-muted">Resolución</label>
-                        <p><strong>Técnicos:</strong> Carlos R., María L.</p>
-                        <p><strong>Tiempo total:</strong> 45 min</p>
-                    </div>
-                    <div class="col-md-4 text-right">
-                        <div class="badge badge-success p-2">
-                            <i class="fas fa-clock"></i> Finalizado: 17/04/2026 14:30
-                        </div>
-                    </div>
-                </div>
-
-                <form id="formComentarioFinal">
-                    <div class="form-group">
-                        <label for="comentarioAdmin" class="text-success">
-                            <i class="fas fa-comment-dots"></i> Añadir Comentario Técnico / Observaciones
-                        </label>
-                        <textarea class="form-control" id="comentarioAdmin" name="comentario" rows="4" 
-                                  placeholder="Escribe aquí los detalles finales del soporte prestado..."></textarea>
-                        <small class="form-text text-danger font-italic">
-                            * Al subir este comentario, el ticket se archivará permanentemente en el historial.
-                        </small>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="submit" form="formComentarioFinal" class="btn btn-success">
-                    <i class="fas fa-archive"></i> Subir Comentario y Archivar
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<?php // -----------------------ESTILOS CSS---------------------- ?>
-<style>
-    /* Usamos el nombre de la clase de la tarjeta para mayor fuerza */
     .card.ticket-clickable {
         cursor: pointer !important;
         transition: all 0.3s ease !important;
         position: relative !important;
         display: block !important;
+        width: 280px !important;
+        min-width: 260px;
+        max-width: 280px;
+        margin: 10px !important;
+        flex: 0 0 auto;
     }
-
     .card.ticket-clickable:hover {
-        /* Aumentamos el tamaño y lo traemos al frente */
-        transform: scale(1.08) !important; 
-        -webkit-transform: scale(1.08) !important; /* Para navegadores Chrome/Safari antiguos */
-        
+        transform: scale(1.05) !important;
         box-shadow: 0 12px 24px rgba(0,0,0,0.5) !important;
-        z-index: 9999 !important; /* Esto lo pone por encima de todo */
+        z-index: 9999 !important;
         filter: brightness(1.15) !important;
     }
     .custom-control-input:checked ~ .custom-control-label {
         color: #007bff !important;
         font-weight: bold;
     }
-
-    /* Contenedor con scroll por si hay muchos técnicos */
-    .tecnicos-container {
-        border: 1px solid #ced4da;
-        border-radius: 4px;
-        padding: 10px;
-        background: #fff;
+    .bg-gradient-teal {
+        background: linear-gradient(135deg, #20c997 0%, #0dcaf0 100%);
+        color: white;
+    }
+    .info-row {
+        font-size: 12px;
+        margin-bottom: 6px;
+        text-align: left;
+        padding: 3px 0;
+    }
+    .ticket-title {
+        font-size: 16px;
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+        border-bottom: 2px solid rgba(255,255,255,0.3);
+        text-align: center;
+    }
+    .badge-tiempo {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+    .card-body {
+        padding: 15px;
+    }
+    .separator {
+        border-top: 1px solid rgba(255,255,255,0.2);
+        margin: 8px 0;
+    }
+    .card .info-row i {
+        width: 20px;
+    }
+    /* Responsive */
+    @media (max-width: 1200px) {
+        .card.ticket-clickable {
+            width: 260px !important;
+        }
+    }
+    @media (max-width: 992px) {
+        .card.ticket-clickable {
+            width: 240px !important;
+        }
+    }
+    @media (max-width: 768px) {
+        .card.ticket-clickable {
+            width: 220px !important;
+        }
     }
 </style>
+
+<?= $this->section('menu_options') ?>
+<li class="nav-item">
+    <a href="<?= base_url('admin/dashboard') ?>" class="nav-link active">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Dashboard</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/tecnicos') ?>" class="nav-link">
+        <i class="nav-icon fas fa-user-cog"></i>
+        <p>Gestionar Técnicos</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
+        <i class="nav-icon fas fa-users"></i>
+        <p>Gestionar Usuarios</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/reportes') ?>" class="nav-link">
+        <i class="nav-icon fas fa-chart-line"></i>
+        <p>Estadísticas</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/historial') ?>" class="nav-link">
+        <i class="nav-icon fas fa-history"></i>
+        <p>Historial</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/agenda') ?>" class="nav-link">
+        <i class="nav-icon fas fa-calendar-alt"></i>
+        <p>Agenda</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/auditoria') ?>" class="nav-link">
+        <i class="nav-icon fas fa-fingerprint"></i>
+        <p>Auditoria</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('admin/documentacion') ?>" class="nav-link">
+        <i class="nav-icon fas fa-book"></i>
+        <p>Documentacion</p>
+    </a>
+</li>
+<li class="nav-item">
+    <a href="<?= base_url('logout') ?>" class="nav-link text-danger">
+        <i class="nav-icon fas fa-sign-out-alt"></i>
+        <p>Cerrar Sesión</p>
+    </a>
+</li>
+<?= $this->endSection() ?>
+
+<?= $this->section('content') ?>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1>Gestión de Tickets</h1>
+            <p>Bienvenido <strong><?= session()->get('user_nombre') ?> <?= session()->get('user_apellido') ?></strong> al control total del soporte técnico.</p>
+        </div>
+    </div>
+
+    <!-- TICKETS EN ESPERA -->
+    <h5 class="mt-4 mb-3">
+        <i class="fas fa-clock"></i> En espera 
+        <span class="badge badge-warning badge-lg"><?= count($ticketsEspera) ?></span>
+    </h5>
+    <div id="carruselEnEspera" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <?php if (empty($ticketsEspera)): ?>
+                <div class="carousel-item active">
+                    <div class="alert alert-info text-center m-3">No hay tickets en espera</div>
+                </div>
+            <?php else: ?>
+                <?php 
+                // Mostrar 4 tarjetas por slide (máximo)
+                $chunks = array_chunk($ticketsEspera, 4);
+                foreach ($chunks as $index => $chunk): 
+                ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="d-flex justify-content-center flex-wrap">
+                        <?php foreach ($chunk as $ticket): ?>
+                            <div class="card bg-info ticket-clickable" 
+                                 data-ticket-id="<?= $ticket['id'] ?>"
+                                 data-ticket-usuario-nombre="<?= $ticket['usuario_nombre'] ?? '' ?>"
+                                 data-ticket-usuario-apellido="<?= $ticket['usuario_apellido'] ?? '' ?>"
+                                 data-ticket-usuario-ci="<?= $ticket['usuario_ci'] ?? '' ?>"
+                                 data-ticket-modulo="<?= $ticket['modulo_nombre'] ?? 'N/A' ?>"
+                                 data-ticket-problema-titulo="<?= $ticket['problematica_titulo'] ?? '' ?>"
+                                 data-ticket-problema-clasificacion="<?= $ticket['clasificacion'] ?? '' ?>"
+                                 data-toggle="modal" 
+                                 data-target="#modalAsignarTicket">
+                                <div class="card-body">
+                                    <div class="ticket-title">
+                                        <i class="fas fa-ticket-alt"></i> 
+                                        <strong>#<?= str_pad($ticket['id'], 4, '0', STR_PAD_LEFT) ?></strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-user fa-fw"></i> 
+                                        <?= $ticket['usuario_nombre'] ?? 'ID: '.$ticket['id_usuario'] ?> <?= $ticket['usuario_apellido'] ?? '' ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-id-card fa-fw"></i> 
+                                        CI: <?= $ticket['usuario_ci'] ?? 'N/A' ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-layer-group fa-fw"></i> 
+                                        <?= $ticket['modulo_nombre'] ?? 'N/A' ?>
+                                    </div>
+                                    <div class="separator"></div>
+                                    <div class="info-row">
+                                        <i class="fas fa-exclamation-triangle fa-fw"></i> 
+                                        <?= $ticket['problematica_titulo'] ?? 'ID: '.$ticket['id_problematica'] ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-tag fa-fw"></i> 
+                                        <?= $ticket['clasificacion'] ?? 'N/A' ?>
+                                    </div>
+                                    <div class="separator"></div>
+                                    <div class="info-row text-center">
+                                        <small>
+                                            <i class="fas fa-calendar fa-fw"></i> 
+                                            <?= date('d/m/Y H:i', strtotime($ticket['creacion_del_ticket'])) ?>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <?php if (count($ticketsEspera) > 4): ?>
+        <a class="carousel-control-prev" href="#carruselEnEspera" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#carruselEnEspera" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+        <?php endif; ?>
+    </div>
+
+    <!-- TICKETS EN REVISIÓN -->
+    <h5 class="mt-4 mb-3">
+        <i class="fas fa-sync-alt"></i> En Revisión 
+        <span class="badge badge-primary badge-lg"><?= count($ticketsRevision) ?></span>
+    </h5>
+    <div id="carruselRevision" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <?php if (empty($ticketsRevision)): ?>
+                <div class="carousel-item active">
+                    <div class="alert alert-info text-center m-3">No hay tickets en revisión</div>
+                </div>
+            <?php else: ?>
+                <?php 
+                $chunks = array_chunk($ticketsRevision, 4);
+                foreach ($chunks as $index => $chunk): 
+                ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="d-flex justify-content-center flex-wrap">
+                        <?php foreach ($chunk as $ticket): ?>
+                            <div class="card bg-gradient-teal ticket-clickable" 
+                                 data-ticket-id="<?= $ticket['id'] ?>"
+                                 data-ticket-tecnico-nombre="<?= $ticket['tecnico_nombre'] ?? '' ?>"
+                                 data-ticket-tecnico-apellido="<?= $ticket['tecnico_apellido'] ?? '' ?>"
+                                 data-toggle="modal" 
+                                 data-target="#modalEditarRevision">
+                                <div class="card-body">
+                                    <div class="ticket-title">
+                                        <i class="fas fa-sync-alt fa-spin"></i> 
+                                        <strong>#<?= str_pad($ticket['id'], 4, '0', STR_PAD_LEFT) ?></strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-user fa-fw"></i> 
+                                        <?= $ticket['usuario_nombre'] ?? 'ID: '.$ticket['id_usuario'] ?> <?= $ticket['usuario_apellido'] ?? '' ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-id-card fa-fw"></i> 
+                                        CI: <?= $ticket['usuario_ci'] ?? 'N/A' ?>
+                                    </div>
+                                    <div class="separator"></div>
+                                    <div class="info-row">
+                                        <i class="fas fa-exclamation-triangle fa-fw"></i> 
+                                        <?= $ticket['problematica_titulo'] ?? 'ID: '.$ticket['id_problematica'] ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-tag fa-fw"></i> 
+                                        <?= $ticket['clasificacion'] ?? 'N/A' ?>
+                                    </div>
+                                    <div class="separator"></div>
+                                    <div class="info-row">
+                                        <i class="fas fa-user-cog fa-fw"></i> 
+                                        <?= $ticket['tecnico_nombre'] ?? 'No asignado' ?> <?= $ticket['tecnico_apellido'] ?? '' ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-hourglass-half fa-fw"></i> 
+                                        <?= date('d/m/Y H:i', strtotime($ticket['estado_en_proceso'])) ?>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <?php if (count($ticketsRevision) > 4): ?>
+        <a class="carousel-control-prev" href="#carruselRevision" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#carruselRevision" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+        <?php endif; ?>
+    </div>
+
+    <!-- TICKETS COMPLETADOS -->
+    <h5 class="mt-4 mb-3">
+        <i class="fas fa-check-double"></i> Por Comentar
+        <span class="badge badge-success badge-lg"><?= count($ticketsCompletados) ?></span>
+    </h5>
+    <div id="carruselCompletado" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <?php if (empty($ticketsCompletados)): ?>
+                <div class="carousel-item active">
+                    <div class="alert alert-info text-center m-3">No hay tickets completados</div>
+                </div>
+            <?php else: ?>
+                <?php 
+                $chunks = array_chunk($ticketsCompletados, 4);
+                foreach ($chunks as $index => $chunk): 
+                ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                    <div class="d-flex justify-content-center flex-wrap">
+                        <?php foreach ($chunk as $ticket): ?>
+                            <div class="card bg-success ticket-clickable" 
+                                 data-ticket-id="<?= $ticket['id'] ?>"
+                                 data-ticket-usuario-nombre="<?= $ticket['usuario_nombre'] ?? '' ?>"
+                                 data-ticket-usuario-apellido="<?= $ticket['usuario_apellido'] ?? '' ?>"
+                                 data-ticket-tecnico-nombre="<?= $ticket['tecnico_nombre'] ?? '' ?>"
+                                 data-ticket-tecnico-apellido="<?= $ticket['tecnico_apellido'] ?? '' ?>"
+                                 data-toggle="modal" 
+                                 data-target="#modalTicketCompletado">
+                                <div class="card-body">
+                                    <div class="ticket-title">
+                                        <i class="fas fa-check-double"></i> 
+                                        <strong>#<?= str_pad($ticket['id'], 4, '0', STR_PAD_LEFT) ?></strong>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-user fa-fw"></i> 
+                                        <?= $ticket['usuario_nombre'] ?? 'ID: '.$ticket['id_usuario'] ?> <?= $ticket['usuario_apellido'] ?? '' ?>
+                                    </div>
+                                    <div class="info-row">
+                                        <i class="fas fa-exclamation-triangle fa-fw"></i> 
+                                        <?= $ticket['problematica_titulo'] ?? 'ID: '.$ticket['id_problematica'] ?>
+                                    </div>
+                                    <div class="separator"></div>
+                                    <div class="info-row">
+                                        <i class="fas fa-user-cog fa-fw"></i> 
+                                        <?= $ticket['tecnico_nombre'] ?? 'N/A' ?> <?= $ticket['tecnico_apellido'] ?? '' ?>
+                                    </div>
+                                    <div class="info-row text-center">
+                                        <small>
+                                            <i class="fas fa-calendar-check"></i> 
+                                            <?= date('d/m/Y H:i', strtotime($ticket['estado_completado'])) ?>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </div>
+        <?php if (count($ticketsCompletados) > 4): ?>
+        <a class="carousel-control-prev" href="#carruselCompletado" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#carruselCompletado" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+        <?php endif; ?>
+    </div>
+</div>
+
+<!-- MODAL ASIGNAR TICKET (EN ESPERA) -->
+<div class="modal fade" id="modalAsignarTicket" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark">
+                <h5 class="modal-title text-white">Asignar Ticket</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <strong>Ticket ID:</strong> <span id="modalTicketId">-</span><br>
+                    <strong>Usuario:</strong> <span id="modalUsuarioNombre">-</span><br>
+                    <strong>Cédula:</strong> <span id="modalUsuarioCi">-</span><br>
+                    <strong>Módulo:</strong> <span id="modalModulo">-</span><br>
+                    <strong>Problema:</strong> <span id="modalProblematicaTitulo">-</span><br>
+                    <strong>Clasificación:</strong> <span id="modalProblematicaClasificacion">-</span>
+                </div>
+                <hr>
+                <form id="formAsignarTicket">
+                    <input type="hidden" name="ticket_id" id="formTicketId">
+                    <div class="form-group">
+                        <label><i class="fas fa-user-cog"></i> Asignar Técnico</label>
+                        <select class="form-control" name="tecnico_id" id="tecnicoSelect" required>
+                            <option value="">Seleccione un técnico...</option>
+                            <?php foreach ($tecnicos as $tecnico): ?>
+                                <option value="<?= $tecnico['id'] ?>">
+                                    <?= $tecnico['nombre'] ?> <?= $tecnico['apellido'] ?> (CI: <?= $tecnico['ci'] ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Tiempo estimado de atención</label>
+                        <select class="form-control" name="tiempo" id="tiempoEstimado">
+                            <option value="15">15 minutos</option>
+                            <option value="30" selected>30 minutos</option>
+                            <option value="60">1 hora</option>
+                            <option value="120">2 horas</option>
+                            <option value="urgente">Urgente (Atención inmediata)</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnAsignarTicket">Asignar y Mover a Revisión</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDITAR REVISIÓN -->
+<div class="modal fade" id="modalEditarRevision" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-warning">
+                <h5 class="modal-title text-dark">Gestionar Revisión</h5>
+                <button type="button" class="close text-dark" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-light border">
+                    <strong>Ticket ID:</strong> <span id="editTicketId">-</span><br>
+                    <strong>Técnico actual:</strong> <span id="editTecnicoActual">-</span>
+                </div>
+                <hr>
+                <form id="formEditarRevision">
+                    <input type="hidden" name="ticket_id" id="editFormTicketId">
+                    <div class="form-group">
+                        <label><i class="fas fa-user-edit"></i> Reasignar Técnico</label>
+                        <select class="form-control" name="tecnico_id" id="editTecnicoSelect">
+                            <option value="">Seleccione un técnico...</option>
+                            <?php foreach ($tecnicos as $tecnico): ?>
+                                <option value="<?= $tecnico['id'] ?>">
+                                    <?= $tecnico['nombre'] ?> <?= $tecnico['apellido'] ?> (CI: <?= $tecnico['ci'] ?>)
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-warning" id="btnActualizarTicket">Reasignar Técnico</button>
+                <button type="button" class="btn btn-success" id="btnFinalizarTicket">Finalizar Ticket</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL TICKET COMPLETADO -->
+<div class="modal fade" id="modalTicketCompletado" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title text-white">Ticket Completado</h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success">
+                    <strong>Ticket ID:</strong> <span id="completadoTicketId">-</span><br>
+                    <strong>Usuario:</strong> <span id="completadoUsuario">-</span><br>
+                    <strong>Técnico:</strong> <span id="completadoTecnico">-</span>
+                </div>
+                <form id="formComentarioFinal">
+                    <input type="hidden" name="ticket_id" id="completadoFormTicketId">
+                    <div class="form-group">
+                        <label><i class="fas fa-comment-dots"></i> Solución / Observaciones</label>
+                        <textarea class="form-control" name="comentario" rows="4" 
+                                  placeholder="Describe la solución aplicada..."></textarea>
+                        <small class="form-text text-muted">
+                            Este comentario quedará registrado en el historial.
+                        </small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-success" id="btnArchivarTicket">
+                    <i class="fas fa-archive"></i> Guardar y Archivar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // ========== TICKET EN ESPERA - Cargar datos en el modal ==========
+    $('.card[data-target="#modalAsignarTicket"]').on('click', function() {
+        let ticketId = $(this).data('ticket-id');
+        let usuarioNombre = $(this).data('ticket-usuario-nombre') || '';
+        let usuarioApellido = $(this).data('ticket-usuario-apellido') || '';
+        let usuarioCi = $(this).data('ticket-usuario-ci') || 'N/A';
+        let modulo = $(this).data('ticket-modulo') || 'N/A';
+        let problemaTitulo = $(this).data('ticket-problema-titulo') || 'N/A';
+        let problemaClasificacion = $(this).data('ticket-problema-clasificacion') || 'N/A';
+        
+        $('#modalTicketId').text(ticketId);
+        $('#modalUsuarioNombre').text(usuarioNombre + ' ' + usuarioApellido);
+        $('#modalUsuarioCi').text(usuarioCi);
+        $('#modalModulo').text(modulo);
+        $('#modalProblematicaTitulo').text(problemaTitulo);
+        $('#modalProblematicaClasificacion').text(problemaClasificacion);
+        $('#formTicketId').val(ticketId);
+    });
+
+    // ========== TICKET EN REVISIÓN - Cargar datos ==========
+    $('.card[data-target="#modalEditarRevision"]').on('click', function() {
+        let ticketId = $(this).data('ticket-id');
+        let tecnicoNombre = $(this).data('ticket-tecnico-nombre') || 'No asignado';
+        let tecnicoApellido = $(this).data('ticket-tecnico-apellido') || '';
+        
+        $('#editTicketId').text(ticketId);
+        $('#editTecnicoActual').text(tecnicoNombre + ' ' + tecnicoApellido);
+        $('#editFormTicketId').val(ticketId);
+    });
+
+    // ========== TICKET COMPLETADO - Cargar datos ==========
+    $('.card[data-target="#modalTicketCompletado"]').on('click', function() {
+        let ticketId = $(this).data('ticket-id');
+        let usuario = $(this).data('ticket-usuario-nombre') || 'N/A';
+        let tecnico = $(this).data('ticket-tecnico-nombre') || 'N/A';
+        
+        $('#completadoTicketId').text(ticketId);
+        $('#completadoUsuario').text(usuario);
+        $('#completadoTecnico').text(tecnico);
+        $('#completadoFormTicketId').val(ticketId);
+    });
+
+    // ========== ASIGNAR TICKET ==========
+    $('#btnAsignarTicket').on('click', function() {
+        let formData = $('#formAsignarTicket').serialize();
+        
+        $.ajax({
+            url: '<?= base_url("admin/api/tickets/asignar") ?>',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Asignado!',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', response.message, 'error');
+                }
+            },
+            error: function() {
+                Swal.fire('Error', 'Error al procesar la solicitud', 'error');
+            }
+        });
+    });
+
+    // ========== ACTUALIZAR TICKET (REASIGNAR) ==========
+    $('#btnActualizarTicket').on('click', function() {
+        let formData = $('#formEditarRevision').serialize();
+        
+        $.ajax({
+            url: '<?= base_url("admin/api/tickets/actualizar") ?>',
+            type: 'POST',
+            data: formData,
+            dataType: 'json',
+            success: function(response) {
+                if (response.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: '¡Actualizado!',
+                        text: response.message,
+                        timer: 2000,
+                        showConfirmButton: false
+                    }).then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Error', response.message, 'error');
+                }
+            },
+            error: function() {
+                Swal.fire('Error', 'Error al procesar la solicitud', 'error');
+            }
+        });
+    });
+
+    // ========== FINALIZAR TICKET ==========
+    $('#btnFinalizarTicket').on('click', function() {
+        Swal.fire({
+            title: '¿Finalizar este ticket?',
+            text: "El ticket pasará a completado",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, finalizar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let ticketId = $('#editFormTicketId').val();
+                
+                $.ajax({
+                    url: '<?= base_url("admin/api/tickets/finalizar") ?>',
+                    type: 'POST',
+                    data: { ticket_id: ticketId },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Finalizado!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Error al procesar la solicitud', 'error');
+                    }
+                });
+            }
+        });
+    });
+
+    // ========== ARCHIVAR TICKET ==========
+    $('#btnArchivarTicket').on('click', function() {
+        let formData = $('#formComentarioFinal').serialize();
+        
+        Swal.fire({
+            title: '¿Archivar este ticket?',
+            text: "Se guardará en el historial",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#28a745',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, archivar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '<?= base_url("admin/api/tickets/archivar") ?>',
+                    type: 'POST',
+                    data: formData,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: '¡Archivado!',
+                                text: response.message,
+                                timer: 2000,
+                                showConfirmButton: false
+                            }).then(() => {
+                                location.reload();
+                            });
+                        } else {
+                            Swal.fire('Error', response.message, 'error');
+                        }
+                    },
+                    error: function() {
+                        Swal.fire('Error', 'Error al procesar la solicitud', 'error');
+                    }
+                });
+            }
+        });
+    });
+});
+
+// SweetAlert
+if (typeof Swal === 'undefined') {
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/sweetalert2@11';
+    document.head.appendChild(script);
+}
+</script>
+
+<!-- SweetAlert CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
 <?= $this->endSection() ?>

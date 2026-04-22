@@ -21,8 +21,8 @@ class Filters extends BaseFilters
      *
      * @var array<string, class-string|list<class-string>>
      *
-     * [filter_name => classname]
-     * or [filter_name => [classname1, classname2, ...]]
+     * [filter_name] => classname
+     * or [filter_name] => [classname1, classname2, ...]
      */
     public array $aliases = [
         'csrf'          => CSRF::class,
@@ -34,6 +34,10 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
+        // Agregamos nuestros filtros personalizados
+        'auth'          => \App\Filters\AuthFilter::class,
+        'auth_tecnico'  => \App\Filters\AuthTecnicoFilter::class,
+        'auth_usuario'  => \App\Filters\AuthUsuarioFilter::class,
     ];
 
     /**
@@ -73,7 +77,7 @@ class Filters extends BaseFilters
     public array $globals = [
         'before' => [
             // 'honeypot',
-            // 'csrf',
+            // 'csrf' => ['except' => ['admin/api/*', 'tecnico/api/*', 'usuario/api/*']], // Descomenta si quieres CSRF
             // 'invalidchars',
         ],
         'after' => [
@@ -106,5 +110,25 @@ class Filters extends BaseFilters
      *
      * @var array<string, array<string, list<string>>>
      */
-    public array $filters = [];
+    public array $filters = [
+        // Filtros para rutas de admin
+        'auth' => [
+            'before' => [
+                'admin/*',           // Todas las rutas de admin
+                'promover/*',        // Rutas de promoción
+            ],
+        ],
+        // Filtros para rutas de técnico
+        'auth_tecnico' => [
+            'before' => [
+                'tecnico/*',         // Todas las rutas de técnico
+            ],
+        ],
+        // Filtros para rutas de usuario
+        'auth_usuario' => [
+            'before' => [
+                'usuario/*',         // Todas las rutas de usuario
+            ],
+        ],
+    ];
 }

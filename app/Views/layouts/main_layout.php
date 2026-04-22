@@ -235,13 +235,34 @@
                 </div>
             </div>
 
-            <nav class="mt-2">
-                <ul class="nav nav-pills nav-sidebar flex-column">
-                    <?= $this->renderSection('menu_options') ?>
-                </ul>
-            </nav>
+      
+      <!-- Notifications Dropdown Menu -->
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+          <i class="far fa-bell"></i>
+          
+        </a>
+      
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <span class="dropdown-item dropdown-header">15 Notifications</span>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-envelope mr-2"></i> 4 new messages
+            <span class="float-right text-muted text-sm">3 mins</span>
+          </a>
+        
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item">
+            <i class="fas fa-file mr-2"></i> 3 new reports
+            <span class="float-right text-muted text-sm">2 days</span>
+          </a>
+          <div class="dropdown-divider"></div>
+          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-    </aside>
+      </li>
+    
+    </ul>
+  </nav>
 
     <!-- Content Wrapper -->
     <div class="content-wrapper">
@@ -256,12 +277,21 @@
         <strong>Copyright &copy; 2026 Equipo Pasantías.</strong>
     </footer>
 </div>
+</aside>
 
-<!-- Scripts -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/js/OverlayScrollbars.min.js"></script>
+<div class="content-wrapper">
+    <section class="content pt-3">
+      <div class="container-fluid">
+        <?= $this->renderSection('content') ?>
+      </div>
+    </section>
+  </div>
 
+<footer class="main-footer">
+    <strong>Copyright &copy; 2026 Equipo Pasantías.</strong>
+  </footer>
+</div> <script src="<?= base_url('assets/adminlte/plugins/jquery/jquery.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte/plugins/bootstrap/js/bootstrap.bundle.min.js') ?>"></script>
+<script src="<?= base_url('assets/adminlte/dist/js/adminlte.min.js') ?>"></script>
 </body>
 </html>

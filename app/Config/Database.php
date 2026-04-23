@@ -1,7 +1,7 @@
 <?php
 
 namespace Config;
-
+ 
 use CodeIgniter\Database\Config;
 
 /**

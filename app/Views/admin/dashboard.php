@@ -106,7 +106,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="<?= base_url('admin/tecnicos') ?>" class="nav-link">
+    <a href="<?= base_url('admin/gestion_tec') ?>" class="nav-link ">
         <i class="nav-icon fas fa-user-cog"></i>
         <p>Gestionar Técnicos</p>
     </a>

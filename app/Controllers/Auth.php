@@ -138,7 +138,8 @@ public function checkLogin()
         if ($usuario['rol_id'] == 1) {
             return redirect()->to('/admin/dashboard');
         } else {
-            return redirect()->to('/user/dashboard');
+            // Redirigir a la ruta correcta para usuarios normales
+            return redirect()->to('/usuario/dashboard');
         }
         
     } else {

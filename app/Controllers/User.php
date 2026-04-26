@@ -35,7 +35,7 @@ class User extends BaseController
             'problematicas' => $this->problematicaModel->findAll()
         ];
         
-        return view('user/dashboard', $data);
+        return view('usuario/dashboard', $data);
     }
     
     // Crear nuevo ticket
@@ -49,7 +49,7 @@ class User extends BaseController
         ];
         
         if ($this->ticketModel->insert($data)) {
-            return redirect()->to('/user/dashboard')->with('success', 'Ticket creado exitosamente');
+            return redirect()->to('/usuario/dashboard')->with('success', 'Ticket creado exitosamente');
         }
         
         return redirect()->back()->with('error', 'Error al crear ticket');
@@ -62,7 +62,7 @@ class User extends BaseController
         
         if ($ticket && $ticket['id_usuario'] == session()->get('user_id')) {
             $this->ticketModel->completarTicket($ticketId);
-            return redirect()->to('/user/dashboard')->with('success', 'Ticket completado');
+            return redirect()->to('/usuario/dashboard')->with('success', 'Ticket completado');
         }
         
         return redirect()->back()->with('error', 'No puedes completar este ticket');

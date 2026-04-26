@@ -2,14 +2,14 @@
 
 <?= $this->section('menu_options') ?>
   <li class="nav-item">
-    <a href="<?= base_url('admin/tickets') ?>" class="nav-link">
+    <a href="<?= base_url('admin/dashboard') ?>" class="nav-link">
       <i class="nav-icon fas fa-tachometer-alt"></i>
       <p>Inicio</p>
     </a>
   </li>
 
   <li class="nav-item">
-    <a href="<?= base_url('admin/usuarios') ?>" class="nav-link">
+    <a href="<?= base_url('admin/gestion_tec') ?>" class="nav-link active">
       <i class="nav-icon fas fa-user-cog"></i>
       <p>Gestionar Técnicos</p>
     </a>

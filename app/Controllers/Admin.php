@@ -55,6 +55,14 @@ public function dashboard()
         $data['tecnicos'] = $this->usuarioModel->where('rol_id', 2)->findAll();
         return view('admin/tecnicos', $data);
     }
+
+    // Mostrar la vista de gestión de técnicos (gestion_tec.php)
+    public function gestion_tec()
+    {
+        // Reutilizamos la misma consulta de técnicos para la vista
+        $data['tecnicos'] = $this->usuarioModel->where('rol_id', 2)->findAll();
+        return view('admin/gestion_tec', $data);
+    }
     
     public function reportes()
     {

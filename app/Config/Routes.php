@@ -32,6 +32,8 @@ $routes->group('admin', function($routes) {
     
     // Gestión de tickets
     $routes->get('tickets', 'Admin::tickets');
+    // Gestión de técnicos (vista gestion_tec)
+    $routes->get('gestion_tec', 'Admin::gestion_tec');
     
     // Gestión de usuarios
     $routes->get('usuarios', 'Admin::usuarios');
@@ -61,6 +63,9 @@ $routes->group('usuario', function($routes) {
     $routes->get('dashboard', 'User::dashboard');
     $routes->get('mis-tickets', 'User::misTickets');
 });
+
+// Alias antiguo: soportar /user/dashboard para compatibilidad
+$routes->get('user/dashboard', 'User::dashboard');
 
 // Rutas de promoción
 $routes->get('promover/tecnico/(:num)', 'Auth::promoverATecnico/$1');

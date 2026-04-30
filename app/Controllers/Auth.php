@@ -99,16 +99,13 @@ class Auth extends BaseController
         $usuario = $usuarioModel->verificarCredenciales($ci, $password);
         
         if ($usuario) {
+            // Verificar si está activo
             if (isset($usuario['activo']) && $usuario['activo'] == false) {
                 session()->setFlashdata('error', 'Cuenta desactivada');
                 return redirect()->back()->withInput();
             }
             
-            if ($usuario['rol_id'] == 2) {
-                session()->setFlashdata('error', 'Los técnicos no pueden iniciar sesión');
-                return redirect()->back()->withInput();
-            }
-            
+            // PRIMERO: Guardar la sesión
             session()->set([
                 'user_id' => $usuario['id'],
                 'user_nombre' => $usuario['nombre'],
@@ -116,14 +113,33 @@ class Auth extends BaseController
                 'user_ci' => $usuario['ci'],
                 'user_rol' => $usuario['rol_id'],
                 'user_modulo' => $usuario['modulo_id'],
-                'isLoggedIn' => true
+                'isLoggedIn' => true,
+                'last_activity' => time(),
+                'rol_id' => $usuario['rol_id'],
+                'id' => $usuario['id'],
+                'nombre' => $usuario['nombre'],
+                'apellido' => $usuario['apellido'],
+                'ci' => $usuario['ci']
             ]);
             
-            if ($usuario['rol_id'] == 1) {
-                return redirect()->to('/dashboard');
-            } else {
-                return redirect()->to('/user/dashboard');
+            // SEGUNDO: Verificar que la sesión se guardó
+            if (!session()->get('isLoggedIn')) {
+                echo "Error: No se pudo guardar la sesión";
+                return;
             }
+            
+            // TERCERO: Redirigir según el rol
+            if ($usuario['rol_id'] == 1) {
+                // Administrador
+                return redirect()->to('/admin/dashboard');
+            } elseif ($usuario['rol_id'] == 2) {
+                // Técnico
+                return redirect()->to('/tecnico/dashboard');
+            } else {
+                // Usuario normal (rol 3)
+                return redirect()->to('/usuario/dashboard');
+            }
+            
         } else {
             session()->setFlashdata('error', 'Cédula o contraseña incorrectos');
             return redirect()->back()->withInput();

@@ -84,69 +84,68 @@ class Auth extends BaseController
         return view('auth/login');
     }
     
-    // Procesar login (MODIFICADO - solo agrego last_activity y mejoro redirección)
-public function checkLogin()
-{
-    $ci = $this->request->getPost('cedula');
-    $password = $this->request->getPost('password');
-    
-    if (empty($ci) || empty($password)) {
-        session()->setFlashdata('error', 'Completa todos los campos');
-        return redirect()->back()->withInput();
-    }
-    
-    $usuarioModel = new UsuarioModel();
-    $usuario = $usuarioModel->verificarCredenciales($ci, $password);
-    
-    if ($usuario) {
-        // Verificar si está activo
-        if (isset($usuario['activo']) && $usuario['activo'] == false) {
-            session()->setFlashdata('error', 'Cuenta desactivada');
+    // Procesar login
+    public function checkLogin()
+    {
+        $ci = $this->request->getPost('cedula');
+        $password = $this->request->getPost('password');
+        
+        if (empty($ci) || empty($password)) {
+            session()->setFlashdata('error', 'Completa todos los campos');
             return redirect()->back()->withInput();
         }
         
-        // Verificar rol (técnicos no pueden entrar)
-        if ($usuario['rol_id'] == 2) {
-            session()->setFlashdata('error', 'Los técnicos no pueden iniciar sesión');
-            return redirect()->back()->withInput();
-        }
+        $usuarioModel = new UsuarioModel();
+        $usuario = $usuarioModel->verificarCredenciales($ci, $password);
         
-        // PRIMERO: Guardar la sesión
-        session()->set([
-            'user_id' => $usuario['id'],
-            'user_nombre' => $usuario['nombre'],
-            'user_apellido' => $usuario['apellido'],
-            'user_ci' => $usuario['ci'],
-            'user_rol' => $usuario['rol_id'],
-            'user_modulo' => $usuario['modulo_id'],
-            'isLoggedIn' => true,
-            'last_activity' => time(),
-            'rol_id' => $usuario['rol_id'],
-            'id' => $usuario['id'],
-            'nombre' => $usuario['nombre'],
-            'apellido' => $usuario['apellido'],
-            'ci' => $usuario['ci']
-        ]);
-        
-        // SEGUNDO: Verificar que la sesión se guardó
-        if (!session()->get('isLoggedIn')) {
-            echo "Error: No se pudo guardar la sesión";
-            return;
-        }
-        
-        // TERCERO: Redirigir según el rol
-        if ($usuario['rol_id'] == 1) {
-            return redirect()->to('/admin/dashboard');
+        if ($usuario) {
+            // Verificar si está activo
+            if (isset($usuario['activo']) && $usuario['activo'] == false) {
+                session()->setFlashdata('error', 'Cuenta desactivada');
+                return redirect()->back()->withInput();
+            }
+            
+            // PRIMERO: Guardar la sesión
+            session()->set([
+                'user_id' => $usuario['id'],
+                'user_nombre' => $usuario['nombre'],
+                'user_apellido' => $usuario['apellido'],
+                'user_ci' => $usuario['ci'],
+                'user_rol' => $usuario['rol_id'],
+                'user_modulo' => $usuario['modulo_id'],
+                'isLoggedIn' => true,
+                'last_activity' => time(),
+                'rol_id' => $usuario['rol_id'],
+                'id' => $usuario['id'],
+                'nombre' => $usuario['nombre'],
+                'apellido' => $usuario['apellido'],
+                'ci' => $usuario['ci']
+            ]);
+            
+            // SEGUNDO: Verificar que la sesión se guardó
+            if (!session()->get('isLoggedIn')) {
+                echo "Error: No se pudo guardar la sesión";
+                return;
+            }
+            
+            // TERCERO: Redirigir según el rol
+            if ($usuario['rol_id'] == 1) {
+                // Administrador
+                return redirect()->to('/admin/dashboard');
+            } elseif ($usuario['rol_id'] == 2) {
+                // Técnico
+                return redirect()->to('/tecnico/dashboard');
+            } else {
+                // Usuario normal (rol 3)
+                return redirect()->to('/usuario/dashboard');
+            }
+            
         } else {
-            // Redirigir a la ruta correcta para usuarios normales
-            return redirect()->to('/usuario/dashboard');
+            session()->setFlashdata('error', 'Cédula o contraseña incorrectos');
+            return redirect()->back()->withInput();
         }
-        
-    } else {
-        session()->setFlashdata('error', 'Cédula o contraseña incorrectos');
-        return redirect()->back()->withInput();
     }
-}
+    
     // Promover usuario normal a técnico
     public function promoverATecnico($usuario_id)
     {

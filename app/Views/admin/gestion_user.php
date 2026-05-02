@@ -9,14 +9,14 @@
   </li>
 
   <li class="nav-item">
-    <a href="<?= base_url('admin/gestion-tecnicos') ?>" class="nav-link active">
+    <a href="<?= base_url('admin/gestion-tecnicos') ?>" class="nav-link">
       <i class="nav-icon fas fa-user-cog"></i>
       <p>Gestionar Técnicos</p>
     </a>
   </li>
 
   <li class="nav-item">
-    <a href="<?= base_url('admin/gestion_user') ?>" class="nav-link">
+    <a href="<?= base_url('admin/gestion-usuarios') ?>" class="nav-link active">
       <i class="nav-icon fas fa-users"></i>
       <p>Gestionar Usuarios</p>
     </a>
@@ -68,19 +68,23 @@
 
 <?= $this->section('content') ?>
 
-<div class="container-fluid">
-    <h1 class="mb-4">Gestión de Técnicos</h1>
+<div class="container-fluid mb-5">
+    <h1>Gestión de Usuarios</h1>
 </div>
 
 <div class="row">
     <div class="col-12">
         <div class="card shadow">
             <div class="card-header border-transparent">
-                <h3 class="card-title font-weight-bold"><i class="fas fa-users-cog mr-2"></i> Gestión de Personal Técnico</h3>
+                <h3 class="card-title font-weight-bold"><i class="fas fa-users mr-2"></i> Gestión de Usuarios del Sistema</h3>
 
                 <div class="card-tools">
-                    <button class="btn btn-success btn-sm mr-2" id="btnAgregarTecnico">
-                        <i class="fas fa-plus"></i> Agregar Nuevo Técnico
+                    <button class="btn btn-success btn-sm mr-2" id="btnAgregarUsuario">
+                        <i class="fas fa-plus"></i> Agregar Usuario
+                    </button>
+                    
+                    <button class="btn btn-navy btn-sm mr-2" data-toggle="modal" data-target="#modalDescargarUsuarios" style="background-color: #001f3f; color: white;">
+                        <i class="fas fa-download"></i> Descargar
                     </button>
                     
                     <div class="input-group input-group-sm" style="width: 150px; display: inline-flex;">
@@ -93,6 +97,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="card-body table-responsive p-0">
                 <table class="table table-hover text-nowrap table-valign-middle">
                     <thead class="bg-light">
@@ -100,51 +105,50 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Cédula</th>
+                            <th>Módulo</th>
                             <th>Estado</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
-                    <tbody id="tablaTecnicos">
+                    <tbody id="tablaUsuarios">
                         <tr>
-                            <td colspan="5" class="text-center">Cargando técnicos...</td>
+                            <td colspan="6" class="text-center">Cargando usuarios...</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="card-footer clearfix">
-                <small class="text-muted">Mostrando todos los técnicos registrados en el sistema.</small>
+                <small class="text-muted">Mostrando todos los usuarios registrados en el sistema.</small>
             </div>
         </div>
     </div>
 </div>
 
-<!-- ============================================ -->
-<!-- MODAL AGREGAR TÉCNICO -->
-<!-- ============================================ -->
-<div class="modal fade" id="modalAgregarTecnico" tabindex="-1" role="dialog" aria-labelledby="labelAgregar" aria-hidden="true">
+<!-- MODAL AGREGAR USUARIO -->
+<div class="modal fade" id="modalAgregarUsuario" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-success">
                 <h5 class="modal-title text-white font-weight-bold">
-                    <i class="fas fa-user-plus mr-2"></i> Registrar Nuevo Técnico
+                    <i class="fas fa-user-plus mr-2"></i> Registrar Nuevo Usuario
                 </h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="formAgregarTecnico">
+            <form id="formAgregarUsuario">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nuevoNombre">Nombre *</label>
-                                <input type="text" class="form-control" id="nuevoNombre" name="nombre" placeholder="Ej: Carlos" required>
+                                <input type="text" class="form-control" id="nuevoNombre" name="nombre" placeholder="Ej: Juan" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="nuevoApellido">Apellido *</label>
-                                <input type="text" class="form-control" id="nuevoApellido" name="apellido" placeholder="Ej: Ruiz" required>
+                                <input type="text" class="form-control" id="nuevoApellido" name="apellido" placeholder="Ej: Pérez" required>
                             </div>
                         </div>
                     </div>
@@ -161,18 +165,35 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="nuevoModulo">Módulo del Usuario *</label>
+                        <select class="form-control custom-select" id="nuevoModulo" name="modulo" required>
+                            <option value="">Seleccione un módulo</option>
+                            <option value="1">Módulo 1</option>
+                            <option value="2">Módulo 2</option>
+                            <option value="3">Módulo 3</option>
+                            <option value="4">Módulo 4</option>
+                            <option value="5">Módulo 5</option>
+                            <option value="6">Módulo 6</option>
+                            <option value="7">Módulo 7</option>
+                            <option value="8">Módulo 8</option>
+                            <option value="9">Módulo 9</option>
+                            <option value="10">Módulo 10</option>
+                            <option value="11">Módulo 11</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="nuevoEstado">Estado Inicial</label>
                         <select class="form-control custom-select" id="nuevoEstado" name="estado">
                             <option value="0" selected>Activo</option>
                             <option value="1">Inactivo (Suspendido)</option>
                         </select>
-                        <small class="text-muted">Por defecto, los nuevos técnicos se crean con estado "Activo".</small>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
                     <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-success font-weight-bold">
-                        <i class="fas fa-save mr-1"></i> Registrar Técnico
+                        <i class="fas fa-save mr-1"></i> Registrar Usuario
                     </button>
                 </div>
             </form>
@@ -180,32 +201,30 @@
     </div>
 </div>
 
-<!-- ============================================ -->
-<!-- MODAL EDITAR TÉCNICO (CORREGIDO) -->
-<!-- ============================================ -->
-<div class="modal fade" id="modalEditarTecnico" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- MODAL EDITAR USUARIO -->
+<div class="modal fade" id="modalEditarUsuario" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-info">
-                <h5 class="modal-title text-white font-weight-bold"><i class="fas fa-user-edit mr-2"></i> Editar Información del Técnico</h5>
+                <h5 class="modal-title text-white font-weight-bold"><i class="fas fa-user-edit mr-2"></i> Editar Información del Usuario</h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="formEditarTecnico">
+            <form id="formEditarUsuario">
                 <input type="hidden" id="editId" name="id">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="editNombre">Nombre *</label>
-                                <input type="text" class="form-control" id="editNombre" name="nombre" placeholder="Ej: Carlos" required>
+                                <input type="text" class="form-control" id="editNombre" name="nombre" required>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="editApellido">Apellido *</label>
-                                <input type="text" class="form-control" id="editApellido" name="apellido" placeholder="Ej: Ruiz" required>
+                                <input type="text" class="form-control" id="editApellido" name="apellido" required>
                             </div>
                         </div>
                     </div>
@@ -216,8 +235,25 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-id-card"></i></span>
                             </div>
-                            <input type="text" class="form-control" id="editCedula" name="cedula" placeholder="Ej: 11222333" required>
+                            <input type="text" class="form-control" id="editCedula" name="cedula" required>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editModulo">Módulo del Usuario</label>
+                        <select class="form-control custom-select" id="editModulo" name="modulo">
+                            <option value="1">Módulo 1</option>
+                            <option value="2">Módulo 2</option>
+                            <option value="3">Módulo 3</option>
+                            <option value="4">Módulo 4</option>
+                            <option value="5">Módulo 5</option>
+                            <option value="6">Módulo 6</option>
+                            <option value="7">Módulo 7</option>
+                            <option value="8">Módulo 8</option>
+                            <option value="9">Módulo 9</option>
+                            <option value="10">Módulo 10</option>
+                            <option value="11">Módulo 11</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
@@ -226,7 +262,6 @@
                             <option value="0" class="text-success">Activo</option>
                             <option value="1" class="text-danger">Inactivo (Suspendido)</option>
                         </select>
-                        <small class="text-muted">Si se marca como Inactivo, el técnico no podrá recibir nuevos tickets.</small>
                     </div>
                 </div>
                 <div class="modal-footer d-flex justify-content-between">
@@ -240,70 +275,13 @@
     </div>
 </div>
 
-<<!-- ============================================ -->
-<!-- MODAL CAMBIO DE ROL (ACTUALIZADO) -->
-<!-- ============================================ -->
-<!-- MODAL CAMBIO DE ROL (CORREGIDO) -->
-<div class="modal fade" id="modalCambioRol" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-warning">
-                <h5 class="modal-title text-dark font-weight-bold">
-                    <i class="fas fa-exclamation-triangle mr-2"></i> Cambiar Rol del Técnico
-                </h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="text-center py-3">
-                    <i class="fas fa-user-shield text-warning" style="font-size: 50px;"></i>
-                </div>
-                
-                <p class="lead text-center">¿A qué rol deseas cambiar este usuario?</p>
-                
-                <div class="alert alert-secondary">
-                    <strong>Usuario:</strong> <span id="nombreUsuarioRol"></span><br>
-                    <strong>Rol Actual:</strong> <span class="badge badge-info">Técnico (ID: 2)</span>
-                </div>
-
-                <div class="form-group">
-                    <label for="nuevoRol">Seleccionar Nuevo Rol:</label>
-                    <select class="form-control" id="nuevoRol">
-                        <option value="">-- Seleccione un rol --</option>
-                        <option value="1">Administrador (Acceso total - Rol ID: 1)</option>
-                        <option value="3">Usuario Normal (Solo crear tickets - Rol ID: 3)</option>
-                    </select>
-                    <small class="text-muted">Selecciona el nuevo rol para este usuario</small>
-                </div>
-
-                <div class="alert alert-info mt-3">
-                    <i class="fas fa-info-circle"></i> 
-                    <strong>Información de Roles:</strong>
-                    <ul class="mb-0 mt-2">
-                        <li><strong>Administrador (ID: 1):</strong> Podrá gestionar técnicos, tickets y todo el sistema.</li>
-                        <li><strong>Técnico (ID: 2):</strong> Rol actual del usuario.</li>
-                        <li><strong>Usuario Normal (ID: 3):</strong> Solo podrá crear y ver sus propios tickets.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-warning text-dark font-weight-bold" id="btnConfirmarCambioRol">
-                    <i class="fas fa-sync-alt mr-1"></i> Confirmar Cambio de Rol
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL ELIMINAR TÉCNICO (ACTUALIZADO) -->
-<div class="modal fade" id="modalEliminarTecnico" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- MODAL ELIMINAR USUARIO -->
+<div class="modal fade" id="modalEliminarUsuario" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header bg-danger">
                 <h5 class="modal-title text-white font-weight-bold">
-                    <i class="fas fa-trash-alt mr-2"></i> Confirmar Ocultar Técnico
+                    <i class="fas fa-trash-alt mr-2"></i> Confirmar Ocultar Usuario
                 </h5>
                 <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -314,22 +292,95 @@
                     <i class="fas fa-exclamation-circle fa-4x"></i>
                 </div>
                 
-                <h4 class="font-weight-bold">¿Deseas ocultar a este técnico?</h4>
+                <h4 class="font-weight-bold">¿Deseas ocultar a este usuario?</h4>
                 <p class="text-muted">
-                    Estás a punto de ocultar a <strong><span id="nombreTecnicoEliminar"></span></strong>. 
+                    Estás a punto de ocultar a <strong><span id="nombreUsuarioEliminar"></span></strong>. 
                     Esta acción no elimina el registro de la base de datos, solo lo oculta del sistema.
                 </p>
 
                 <div class="alert alert-warning py-2">
-                    <small><i class="fas fa-info-circle"></i> El técnico oculto no aparecerá en la lista, pero sus datos permanecen en la base de datos y pueden ser restaurados posteriormente.</small>
+                    <small><i class="fas fa-info-circle"></i> El usuario oculto no aparecerá en la lista, pero sus datos permanecen en la base de datos.</small>
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
                 <button type="button" class="btn btn-outline-secondary px-4 mr-2" data-dismiss="modal">No, cancelar</button>
                 <button type="button" class="btn btn-danger px-4 shadow" id="btnConfirmarEliminar">
-                    <i class="fas fa-eye-slash mr-1"></i> Sí, ocultar técnico
+                    <i class="fas fa-eye-slash mr-1"></i> Sí, ocultar usuario
                 </button>
             </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DESCARGAR USUARIOS -->
+<div class="modal fade" id="modalDescargarUsuarios" tabindex="-1" role="dialog" aria-labelledby="labelDescargar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-navy">
+                <h5 class="modal-title text-white font-weight-bold">
+                    <i class="fas fa-file-download mr-2"></i> Descargar Lista de Usuarios
+                </h5>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('usuarios/exportar') ?>" method="POST">
+                <div class="modal-body text-center">
+                    <p class="text-muted">Seleccione el formato y los criterios para generar el reporte de usuarios registrados en el sistema.</p>
+                    
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <input type="radio" name="formato" value="pdf" id="pdf_opt" class="d-none" checked>
+                            <label for="pdf_opt" class="format-card p-4 w-100 text-center rounded border shadow-sm pointer">
+                                <div class="icon-circle bg-light-danger mb-3 mx-auto">
+                                    <i class="fas fa-file-pdf fa-3x text-danger"></i>
+                                </div>
+                                <span class="d-block font-weight-bold text-dark">Documento PDF</span>
+                                <small class="text-muted">Ideal para imprimir</small>
+                                <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                            </label>
+                        </div>
+                        
+                        <div class="col-6">
+                            <input type="radio" name="formato" value="excel" id="excel_opt" class="d-none">
+                            <label for="excel_opt" class="format-card p-4 w-100 text-center rounded border shadow-sm pointer">
+                                <div class="icon-circle bg-light-success mb-3 mx-auto">
+                                    <i class="fas fa-file-excel fa-3x text-success"></i>
+                                </div>
+                                <span class="d-block font-weight-bold text-dark">Hoja de Excel</span>
+                                <small class="text-muted">Para análisis de datos</small>
+                                <div class="check-mark"><i class="fas fa-check-circle"></i></div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="form-group text-left">
+                        <label for="filtroModulo">Filtrar por Módulo (Opcional)</label>
+                        <select class="form-control custom-select" id="filtroModulo" name="modulo_reporte">
+                            <option value="todos" selected>Todos los módulos</option>
+                            <option value="1">Módulo 1</option>
+                            <option value="2">Módulo 2</option>
+                            <option value="3">Módulo 3</option>
+                            <option value="4">Módulo 4</option>
+                            <option value="5">Módulo 5</option>
+                            <option value="6">Módulo 6</option>
+                            <option value="7">Módulo 7</option>
+                            <option value="8">Módulo 8</option>
+                            <option value="9">Módulo 9</option>
+                            <option value="10">Módulo 10</option>
+                            <option value="11">Módulo 11</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-navy font-weight-bold" style="background-color: #001f3f; color: white;">
+                        <i class="fas fa-download mr-1"></i> Generar Reporte
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -350,10 +401,49 @@
         padding: 5px 10px;
     }
     
-    .loading {
-        opacity: 0.6;
-        pointer-events: none;
+    .format-card {
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        border: 2px solid #f4f6f9 !important;
     }
+
+    .format-card:hover {
+        transform: translateY(-5px);
+        background-color: #f8f9fa;
+        border-color: #dee2e6 !important;
+    }
+
+    input[type="radio"]:checked + .format-card {
+        border-color: #001f3f !important;
+        background-color: #f0f7ff;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1) !important;
+    }
+
+    .icon-circle {
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+    }
+    .bg-light-danger { background-color: #ffeef0; }
+    .bg-light-success { background-color: #e8fadf; }
+
+    .check-mark {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: #001f3f;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+    input[type="radio"]:checked + .format-card .check-mark {
+        opacity: 1;
+    }
+
+    .pointer { cursor: pointer; }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -362,82 +452,73 @@
 
 <script>
 $(document).ready(function() {
-    // Variable global para almacenar el técnico seleccionado
-    var selectedTecnico = null;
+    var selectedUsuario = null;
     
-    // Cargar técnicos al iniciar
-    cargarTecnicos();
+    cargarUsuarios();
     
-    // Función para cargar técnicos
-    function cargarTecnicos(buscar = '') {
-        $('#tablaTecnicos').html('<tr><td colspan="5" class="text-center"><i class="fas fa-spinner fa-spin mr-2"></i>Cargando técnicos...</td></tr>');
+    function cargarUsuarios(buscar = '') {
+        $('#tablaUsuarios').html('<tr><td colspan="6" class="text-center"><i class="fas fa-spinner fa-spin mr-2"></i>Cargando usuarios...</td></table>');
         
         $.ajax({
-            url: '<?= base_url("admin/api/tecnicos/listar") ?>',
+            url: '<?= base_url("admin/api/usuarios/listar") ?>',
             type: 'GET',
             dataType: 'json',
             success: function(response) {
                 if (response.success) {
-                    mostrarTecnicos(response.data, buscar);
+                    mostrarUsuarios(response.data, buscar);
                 } else {
-                    $('#tablaTecnicos').html('<tr><td colspan="5" class="text-center text-danger">Error al cargar técnicos: ' + response.message + '</td></tr>');
+                    $('#tablaUsuarios').html('<tr><td colspan="6" class="text-center text-danger">Error al cargar usuarios</td></tr>');
                     Swal.fire('Error', response.message, 'error');
                 }
             },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-                $('#tablaTecnicos').html('<tr><td colspan="5" class="text-center text-danger">Error de conexión con el servidor</td></tr>');
+            error: function() {
+                $('#tablaUsuarios').html('<tr><td colspan="6" class="text-center text-danger">Error de conexión</td></tr>');
                 Swal.fire('Error', 'No se pudo conectar con el servidor', 'error');
             }
         });
     }
     
-    // Función para mostrar técnicos en la tabla
-    function mostrarTecnicos(tecnicos, buscar) {
-        if (tecnicos.length === 0) {
-            $('#tablaTecnicos').html('<tr><td colspan="5" class="text-center">No hay técnicos registrados</td></tr>');
+    function mostrarUsuarios(usuarios, buscar) {
+        if (usuarios.length === 0) {
+            $('#tablaUsuarios').html('<tr><td colspan="6" class="text-center">No hay usuarios registrados</td></tr>');
             return;
         }
         
-        // Filtrar por cédula si se busca
-        let tecnicosFiltrados = tecnicos;
+        let usuariosFiltrados = usuarios;
         if (buscar && buscar.trim() !== '') {
-            tecnicosFiltrados = tecnicos.filter(tecnico => 
-                tecnico.ci.toLowerCase().includes(buscar.toLowerCase())
+            usuariosFiltrados = usuarios.filter(usuario => 
+                usuario.ci.toLowerCase().includes(buscar.toLowerCase())
             );
         }
         
-        if (tecnicosFiltrados.length === 0) {
-            $('#tablaTecnicos').html('<tr><td colspan="5" class="text-center">No se encontraron técnicos con esa cédula</td></tr>');
+        if (usuariosFiltrados.length === 0) {
+            $('#tablaUsuarios').html('<tr><td colspan="6" class="text-center">No se encontraron usuarios con esa cédula</td></tr>');
             return;
         }
         
         let html = '';
-        tecnicosFiltrados.forEach(tecnico => {
+        usuariosFiltrados.forEach(usuario => {
             html += `
                 <tr>
-                    <td>${tecnico.nombre}</td>
-                    <td>${tecnico.apellido}</td>
-                    <td>${tecnico.ci}</td>
-                    <td><span class="badge badge-${tecnico.estado_badge}">${tecnico.estado_texto}</span></td>
+                    <td>${usuario.nombre}</td>
+                    <td>${usuario.apellido}</td>
+                    <td>${usuario.ci}</td>
+                    <td><span class="badge badge-primary">Módulo ${usuario.modulo_id || '1'}</span></td>
+                    <td><span class="badge badge-${usuario.estado_badge}">${usuario.estado_texto}</span></td>
                     <td class="text-center">
                         <div class="btn-group">
                             <button type="button" class="btn btn-info btn-sm btn-editar" 
-                                data-id="${tecnico.id}" 
-                                data-nombre="${tecnico.nombre}" 
-                                data-apellido="${tecnico.apellido}" 
-                                data-ci="${tecnico.ci}" 
-                                data-activo="${tecnico.activo}">
+                                data-id="${usuario.id}" 
+                                data-nombre="${usuario.nombre}" 
+                                data-apellido="${usuario.apellido}" 
+                                data-ci="${usuario.ci}" 
+                                data-modulo="${usuario.modulo_id || 1}"
+                                data-activo="${usuario.activo}">
                                 <i class="fas fa-edit"></i> Editar
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm btn-cambiar-rol" 
-                                data-id="${tecnico.id}" 
-                                data-nombre="${tecnico.nombre} ${tecnico.apellido}">
-                                <i class="fas fa-user-shield"></i> Rol
-                            </button>
                             <button type="button" class="btn btn-danger btn-sm btn-eliminar" 
-                                data-id="${tecnico.id}" 
-                                data-nombre="${tecnico.nombre} ${tecnico.apellido}">
+                                data-id="${usuario.id}" 
+                                data-nombre="${usuario.nombre} ${usuario.apellido}">
                                 <i class="fas fa-trash"></i> Eliminar
                             </button>
                         </div>
@@ -446,13 +527,12 @@ $(document).ready(function() {
             `;
         });
         
-        $('#tablaTecnicos').html(html);
+        $('#tablaUsuarios').html(html);
     }
     
-    // Buscar por cédula
     $('#btnBuscar').click(function() {
         const buscar = $('#buscarCedula').val();
-        cargarTecnicos(buscar);
+        cargarUsuarios(buscar);
     });
     
     $('#buscarCedula').keypress(function(e) {
@@ -461,50 +541,37 @@ $(document).ready(function() {
         }
     });
     
-    // Abrir modal Agregar
-    $('#btnAgregarTecnico').click(function() {
-        $('#formAgregarTecnico')[0].reset();
-        $('#modalAgregarTecnico').modal('show');
+    $('#btnAgregarUsuario').click(function() {
+        $('#formAgregarUsuario')[0].reset();
+        $('#modalAgregarUsuario').modal('show');
     });
     
-    // ============================================
-    // EVENTO PARA EDITAR TÉCNICO (CORREGIDO)
-    // ============================================
-    $(document).on('click', '.btn-editar', function(e) {
-        e.preventDefault();
-        
-        // Obtener los datos del botón
+    $(document).on('click', '.btn-editar', function() {
         const id = $(this).data('id');
         const nombre = $(this).data('nombre');
         const apellido = $(this).data('apellido');
         const ci = $(this).data('ci');
+        const modulo = $(this).data('modulo');
         const activo = $(this).data('activo');
         
-        // Llenar el formulario del modal
         $('#editId').val(id);
         $('#editNombre').val(nombre);
         $('#editApellido').val(apellido);
         $('#editCedula').val(ci);
+        $('#editModulo').val(modulo);
+        $('#editEstado').val(activo === true || activo === 'true' ? '0' : '1');
         
-        // Convertir activo a valor del select: true=Activo(0), false=Inactivo(1)
-        if (activo === true || activo === 'true') {
-            $('#editEstado').val('0'); // Activo
-        } else {
-            $('#editEstado').val('1'); // Inactivo
-        }
-        
-        // Abrir el modal
-        $('#modalEditarTecnico').modal('show');
+        $('#modalEditarUsuario').modal('show');
     });
     
-    // Enviar formulario de agregar
-    $('#formAgregarTecnico').submit(function(e) {
+    $('#formAgregarUsuario').submit(function(e) {
         e.preventDefault();
         
         const formData = {
             nombre: $('#nuevoNombre').val(),
             apellido: $('#nuevoApellido').val(),
             cedula: $('#nuevoCedula').val(),
+            modulo: $('#nuevoModulo').val(),
             estado: $('#nuevoEstado').val()
         };
         
@@ -518,7 +585,7 @@ $(document).ready(function() {
         });
         
         $.ajax({
-            url: '<?= base_url("admin/api/tecnicos/agregar") ?>',
+            url: '<?= base_url("admin/api/usuarios/agregar") ?>',
             type: 'POST',
             data: formData,
             dataType: 'json',
@@ -527,11 +594,11 @@ $(document).ready(function() {
                     Swal.fire({
                         icon: 'success',
                         title: '¡Registrado!',
-                        html: `Técnico registrado exitosamente.<br><strong>Contraseña predeterminada:</strong> ${response.password_default}<br><small>Recomendamos cambiar la contraseña en el primer inicio de sesión.</small>`,
+                        html: `Usuario registrado exitosamente.<br><strong>Contraseña predeterminada:</strong> ${response.password_default}`,
                         confirmButtonColor: '#28a745'
                     }).then(() => {
-                        $('#modalAgregarTecnico').modal('hide');
-                        cargarTecnicos();
+                        $('#modalAgregarUsuario').modal('hide');
+                        cargarUsuarios();
                     });
                 } else {
                     let errorMsg = response.message;
@@ -541,18 +608,13 @@ $(document).ready(function() {
                     Swal.fire('Error', errorMsg, 'error');
                 }
             },
-            error: function(xhr) {
-                let errorMsg = 'Error al registrar técnico';
-                if (xhr.responseJSON && xhr.responseJSON.message) {
-                    errorMsg = xhr.responseJSON.message;
-                }
-                Swal.fire('Error', errorMsg, 'error');
+            error: function() {
+                Swal.fire('Error', 'Error al registrar usuario', 'error');
             }
         });
     });
     
-    // Enviar formulario de editar
-    $('#formEditarTecnico').submit(function(e) {
+    $('#formEditarUsuario').submit(function(e) {
         e.preventDefault();
         
         const formData = {
@@ -560,6 +622,7 @@ $(document).ready(function() {
             nombre: $('#editNombre').val(),
             apellido: $('#editApellido').val(),
             cedula: $('#editCedula').val(),
+            modulo: $('#editModulo').val(),
             estado: $('#editEstado').val()
         };
         
@@ -573,7 +636,7 @@ $(document).ready(function() {
         });
         
         $.ajax({
-            url: '<?= base_url("admin/api/tecnicos/editar") ?>',
+            url: '<?= base_url("admin/api/usuarios/editar") ?>',
             type: 'POST',
             data: formData,
             dataType: 'json',
@@ -585,138 +648,44 @@ $(document).ready(function() {
                         text: response.message,
                         confirmButtonColor: '#17a2b8'
                     }).then(() => {
-                        $('#modalEditarTecnico').modal('hide');
-                        cargarTecnicos();
+                        $('#modalEditarUsuario').modal('hide');
+                        cargarUsuarios();
                     });
                 } else {
-                    let errorMsg = response.message;
-                    if (response.errors) {
-                        errorMsg = Object.values(response.errors).join('<br>');
-                    }
-                    Swal.fire('Error', errorMsg, 'error');
+                    Swal.fire('Error', response.message, 'error');
                 }
             },
-            error: function(xhr) {
-                Swal.fire('Error', 'Error al actualizar técnico', 'error');
+            error: function() {
+                Swal.fire('Error', 'Error al actualizar usuario', 'error');
             }
         });
     });
     
-   // Variable global para almacenar el técnico seleccionado
-var selectedTecnico = null;
-
-// Cambiar rol - Abrir modal con opciones
-$(document).on('click', '.btn-cambiar-rol', function() {
-    const id = $(this).data('id');
-    const nombre = $(this).data('nombre');
-    
-    selectedTecnico = { id: id, nombre: nombre };
-    $('#nombreUsuarioRol').text(nombre);
-    
-    // NO establecer valor por defecto, dejar que el usuario elija
-    // $('#nuevoRol').val(''); // Comentado para que no fuerce ningún valor
-    
-    $('#modalCambioRol').modal('show');
-});
-
-// Confirmar cambio de rol
-$('#btnConfirmarCambioRol').click(function() {
-    if (!selectedTecnico) return;
-    
-    const nuevoRol = $('#nuevoRol').val();
-    
-    // Validar que se haya seleccionado un rol
-    if (!nuevoRol) {
-        Swal.fire('Error', 'Por favor selecciona un rol', 'warning');
-        return;
-    }
-    
-    const nombreRol = (nuevoRol == '1') ? 'Administrador' : 'Usuario Normal';
-    
-    // Mostrar confirmación con el rol seleccionado
-    Swal.fire({
-        title: '¿Estás seguro?',
-        html: `Vas a cambiar a <strong>${selectedTecnico.nombre}</strong> a <strong>${nombreRol}</strong>.<br><br>Esta acción modificará sus permisos de acceso inmediatamente.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#ffc107',
-        cancelButtonColor: '#6c757d',
-        confirmButtonText: 'Sí, cambiar rol',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            // Mostrar loading
-            Swal.fire({
-                title: 'Cambiando rol...',
-                text: 'Por favor espere',
-                allowOutsideClick: false,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-            
-            // Enviar petición AJAX
-            $.ajax({
-                url: '<?= base_url("admin/api/tecnicos/cambiar-rol") ?>',
-                type: 'POST',
-                data: { 
-                    id: selectedTecnico.id,
-                    nuevo_rol: nuevoRol 
-                },
-                dataType: 'json',
-                success: function(response) {
-                    console.log('Respuesta del servidor:', response); // Para depuración
-                    
-                    if (response.success) {
-                        Swal.fire({
-                            icon: 'success',
-                            title: '¡Rol Cambiado!',
-                            text: response.message,
-                            confirmButtonColor: '#28a745'
-                        }).then(() => {
-                            $('#modalCambioRol').modal('hide');
-                            cargarTecnicos(); // Recargar la tabla
-                        });
-                    } else {
-                        Swal.fire('Error', response.message, 'error');
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error('Error detallado:', xhr.responseText);
-                    Swal.fire('Error', 'Error al cambiar el rol: ' + error, 'error');
-                }
-            });
-        }
-    });
-});
-    
-    // Eliminar técnico
     $(document).on('click', '.btn-eliminar', function() {
         const id = $(this).data('id');
         const nombre = $(this).data('nombre');
         
-        selectedTecnico = { id: id, nombre: nombre };
-        $('#nombreTecnicoEliminar').text(nombre);
-        $('#modalEliminarTecnico').modal('show');
+        selectedUsuario = { id: id, nombre: nombre };
+        $('#nombreUsuarioEliminar').text(nombre);
+        $('#modalEliminarUsuario').modal('show');
     });
     
-    // Confirmar eliminación
     $('#btnConfirmarEliminar').click(function() {
-        if (!selectedTecnico) return;
+        if (!selectedUsuario) return;
         
         Swal.fire({
             title: '¿Estás seguro?',
-            text: "¡No podrás revertir esta acción!",
+            text: "Esta acción ocultará al usuario pero no lo eliminará permanentemente",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#6c757d',
-            confirmButtonText: 'Sí, eliminar',
+            confirmButtonText: 'Sí, ocultar',
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
                 Swal.fire({
-                    title: 'Eliminando...',
+                    title: 'Ocultando...',
                     text: 'Por favor espere',
                     allowOutsideClick: false,
                     didOpen: () => {
@@ -725,27 +694,27 @@ $('#btnConfirmarCambioRol').click(function() {
                 });
                 
                 $.ajax({
-                    url: '<?= base_url("admin/api/tecnicos/eliminar") ?>',
+                    url: '<?= base_url("admin/api/usuarios/eliminar") ?>',
                     type: 'POST',
-                    data: { id: selectedTecnico.id },
+                    data: { id: selectedUsuario.id },
                     dataType: 'json',
                     success: function(response) {
                         if (response.success) {
                             Swal.fire({
                                 icon: 'success',
-                                title: '¡Eliminado!',
+                                title: '¡Ocultado!',
                                 text: response.message,
                                 confirmButtonColor: '#28a745'
                             }).then(() => {
-                                $('#modalEliminarTecnico').modal('hide');
-                                cargarTecnicos();
+                                $('#modalEliminarUsuario').modal('hide');
+                                cargarUsuarios();
                             });
                         } else {
                             Swal.fire('Error', response.message, 'error');
                         }
                     },
                     error: function() {
-                        Swal.fire('Error', 'Error al eliminar técnico', 'error');
+                        Swal.fire('Error', 'Error al ocultar usuario', 'error');
                     }
                 });
             }

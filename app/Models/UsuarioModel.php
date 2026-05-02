@@ -14,12 +14,18 @@ class UsuarioModel extends Model
         'ci', 
         'modulo_id', 
         'rol_id',
+        'activo',
         'password_hash',
         'sesion_bloqueada',
-        'fecha_creacion'
+        'fecha_creacion',
+        'deleted_at',
     ];
     protected $useTimestamps = false;
     
+    protected $useSoftDeletes = true;
+    protected $createdField = 'fecha_creacion';
+    protected $updatedField = null;
+    protected $deletedField = 'deleted_at';
    
     public function save($data): bool
     {

@@ -336,17 +336,18 @@ class Admin extends BaseController
     // Otros métodos
     public function tickets() {
         $data['tickets'] = $this->ticketModel->findAll();
-        return view('admin/tickets', $data);
+        return view('admin/dashboard', $data);
     }
     
     public function usuarios() {
         $data['usuarios'] = $this->usuarioModel->findAll();
-        return view('admin/usuarios', $data);
+        return view('admin/gestion_user', $data);
     }
-    
-    public function tecnicos() {
+     public function gestion_tec()
+    {
+        // Reutilizamos la misma consulta de técnicos para la vista
         $data['tecnicos'] = $this->usuarioModel->where('rol_id', 2)->findAll();
-        return view('admin/tecnicos', $data);
+        return view('admin/gestion_tec', $data);
     }
     
     public function reportes() {

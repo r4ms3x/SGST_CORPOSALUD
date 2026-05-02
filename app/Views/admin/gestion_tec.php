@@ -4,7 +4,7 @@
   <li class="nav-item">
     <a href="<?= base_url('admin/dashboard') ?>" class="nav-link">
       <i class="nav-icon fas fa-tachometer-alt"></i>
-      <p>Inicio</p>
+      <p>Dashboard</p>
     </a>
   </li>
 
@@ -23,7 +23,7 @@
   </li>
 
   <li class="nav-item">
-    <a href="<?= base_url('admin/reportes') ?>" class="nav-link">
+    <a href="<?= base_url('admin/estadisticas') ?>" class="nav-link">
       <i class="nav-icon fas fa-chart-line"></i>
       <p>Estadísticas</p>
     </a>
@@ -37,9 +37,9 @@
   </li>
 
   <li class="nav-item">
-    <a href="<?= base_url('admin/agenda') ?>" class="nav-link">
+    <a href="<?= base_url('admin/modulo') ?>" class="nav-link">
       <i class="nav-icon fas fa-calendar-alt"></i>
-      <p>Agenda</p>
+      <p>Modulo</p>
     </a>
   </li>
 

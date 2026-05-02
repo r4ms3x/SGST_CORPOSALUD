@@ -123,7 +123,7 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="<?= base_url('admin/reportes') ?>" class="nav-link">
+    <a href="<?= base_url('admin/estadisticas') ?>" class="nav-link">
         <i class="nav-icon fas fa-chart-line"></i>
         <p>Estadísticas</p>
     </a>
@@ -135,9 +135,9 @@
     </a>
 </li>
 <li class="nav-item">
-    <a href="<?= base_url('admin/agenda') ?>" class="nav-link">
+    <a href="<?= base_url('admin/modulo') ?>" class="nav-link">
         <i class="nav-icon fas fa-calendar-alt"></i>
-        <p>Agenda</p>
+        <p>Modulo</p>
     </a>
 </li>
 <li class="nav-item">

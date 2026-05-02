@@ -350,22 +350,24 @@ class Admin extends BaseController
         return view('admin/gestion_tec', $data);
     }
     
-    public function reportes() {
-        return view('admin/reportes');
+    public function estadisticas() {
+        return view('admin/estadisticas');
     }
     
-    public function historial() {
-        return view('admin/historial');
+    public function modulo() {
+        return view('admin/modulo');
     }
+    
+       public function auditoria() {
+        return view('admin/auditoria');
+    }
+    
     
     public function agenda() {
         return view('admin/agenda');
     }
     
-    public function auditoria() {
-        return view('admin/auditoria');
-    }
-    
+ 
     public function documentacion() {
         return view('admin/documentacion');
     }

@@ -59,9 +59,9 @@ $routes->group('admin', function($routes) {
     // ==============================================
     $routes->get('/', 'Admin::dashboard');
     $routes->get('dashboard', 'Admin::dashboard');
-    $routes->get('reportes', 'Admin::reportes');
+    $routes->get('estadisticas', 'Admin::estadisticas');
     $routes->get('historial', 'Admin::historial');
-    $routes->get('agenda', 'Admin::agenda');
+    $routes->get('modulo', 'Admin::modulo');
     $routes->get('auditoria', 'Admin::auditoria');
     $routes->get('documentacion', 'Admin::documentacion');
     

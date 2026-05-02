@@ -22,97 +22,85 @@ $routes->get('logout', 'Auth::logout');
 // Dashboard general (redirige según rol)
 $routes->get('dashboard', 'Dashboard::index');
 
-// ==============================================
-// RUTAS PARA ADMIN (Rol ID = 1)
-// ==============================================
 $routes->group('admin', function($routes) {
-    // Dashboard principal
+    
+    // ==============================================
+    // RUTAS PARA GESTION DE USUARIOS (GestionUser)
+    // ==============================================
+    // Vista principal
+    $routes->get('gestion_user', 'GestionUser::index');
+    $routes->get('gestion-usuarios', 'GestionUser::index'); // Por si usas guión
+    
+    // API Routes para usuarios
+    $routes->group('api/usuarios', function($routes) {
+        $routes->get('listar', 'GestionUser::listarUsuarios');
+        $routes->post('agregar', 'GestionUser::agregarUsuario');
+        $routes->post('editar', 'GestionUser::editarUsuario');
+        $routes->post('eliminar', 'GestionUser::eliminarUsuario');
+    });
+    
+    // ==============================================
+    // RUTAS PARA GESTION DE TECNICOS (GestionTec)
+    // ==============================================
+    $routes->get('gestion_tec', 'GestionTec::index');
+    $routes->get('gestion-tecnicos', 'GestionTec::index');
+    
+    $routes->group('api/tecnicos', function($routes) {
+        $routes->get('listar', 'GestionTec::listarTecnicos');
+        $routes->post('agregar', 'GestionTec::agregarTecnico');
+        $routes->post('editar', 'GestionTec::editarTecnico');
+        $routes->post('cambiar-rol', 'GestionTec::cambiarRol');
+        $routes->post('eliminar', 'GestionTec::eliminarTecnico');
+        $routes->post('restaurar', 'GestionTec::restaurarTecnico');
+    });
+    
+    // ==============================================
+    // TUS RUTAS EXISTENTES DE ADMIN
+    // ==============================================
     $routes->get('/', 'Admin::dashboard');
     $routes->get('dashboard', 'Admin::dashboard');
-    
-    // Gestión de tickets
-    $routes->get('tickets', 'Admin::tickets');
-    
-    // Gestión de usuarios
-    $routes->get('usuarios', 'Admin::usuarios');
-    $routes->get('tecnicos', 'Admin::tecnicos');
-    
-    // Reportes y estadísticas
     $routes->get('reportes', 'Admin::reportes');
     $routes->get('historial', 'Admin::historial');
     $routes->get('agenda', 'Admin::agenda');
     $routes->get('auditoria', 'Admin::auditoria');
     $routes->get('documentacion', 'Admin::documentacion');
     
-    // ==============================================
-    // API ROUTES PARA TIEMPO REAL
-    // ==============================================
+    // API para tickets (tus rutas existentes)
     $routes->get('getTicketsActualizados', 'Admin::getTicketsActualizados');
     $routes->post('asignarTicket', 'Admin::asignarTicket');
     $routes->post('actualizarTicket', 'Admin::actualizarTicket');
     $routes->post('archivarTicket', 'Admin::archivarTicket');
     $routes->post('archivarTicketEspera', 'Admin::archivarTicketEspera');
-    
-    // ==============================================
-    // RUTAS PARA BLOQUEO DE TICKETS
-    // ==============================================
     $routes->post('bloquearTicket', 'Admin::bloquearTicket');
     $routes->post('verificarBloqueo', 'Admin::verificarBloqueo');
     $routes->post('verificarBloqueoHuerfano', 'Admin::verificarBloqueoHuerfano');
     $routes->post('limpiarBloqueoHuerfano', 'Admin::limpiarBloqueoHuerfano');
     $routes->post('desbloquearTicket', 'Admin::desbloquearTicket');
     $routes->post('getTecnicosAsignados', 'Admin::getTecnicosAsignados');
-    
-    // API ROUTES (con prefijo api)
-    $routes->group('api', function($routes) {
-        $routes->post('tickets/asignar', 'Admin::asignarTicket');
-        $routes->post('tickets/actualizar', 'Admin::actualizarTicket');
-        $routes->post('tickets/finalizar', 'Admin::finalizarTicket');
-        $routes->post('tickets/archivar', 'Admin::archivarTicket');
-        $routes->get('tickets/actualizados', 'Admin::getTicketsActualizados');
-        $routes->post('tickets/bloquear', 'Admin::bloquearTicket');
-        $routes->post('tickets/verificarBloqueo', 'Admin::verificarBloqueo');
-        $routes->post('tickets/desbloquear', 'Admin::desbloquearTicket');
-    });
 });
 
 // ==============================================
 // RUTAS PARA USUARIOS NORMALES (Rol 3)
 // ==============================================
-$routes->group('usuario', function($routes) {
-    $routes->get('/', 'User::dashboard');
-    $routes->get('dashboard', 'User::dashboard');
-    $routes->get('mis-tickets', 'User::misTickets');
-    $routes->get('historial', 'HistorialUsuario::index');
-    
+// GESTIÓN DE USUARIOS NORMALES (NUEVO)
     // ==============================================
-    // RUTA PARA DETALLE DE TICKET - ¡ESTA FALTABA!
-    // ==============================================
-    $routes->get('detalleTicket/(:num)', 'HistorialUsuario::detalleTicket/$1');
+    $routes->get('gestion-usuarios', 'GestionUser::index');
+     $routes->get('gestion_user', 'GestionUser::index'); // Compatibilidad
     
-    // API routes para el usuario
-    $routes->post('guardarProblema', 'User::guardarProblema');
-    $routes->get('getTicketEstado/(:num)', 'User::getTicketEstado/$1');
-    $routes->post('completarTicket', 'User::completarTicket');
-    $routes->get('getHistorial', 'User::getHistorial');
-});
-
-// ==============================================
-// RUTAS PARA TÉCNICOS (Rol ID = 2)
-// ==============================================
-$routes->group('tecnico', function($routes) {
-    $routes->get('/', 'Tecnico::dashboard');
-    $routes->get('dashboard', 'Tecnico::dashboard');
-    $routes->get('mis-tickets', 'Tecnico::misTickets');
-});
+    // API Routes para gestión de usuarios
+    $routes->group('api/usuarios', function($routes) {
+        $routes->get('listar', 'GestionUser::listarUsuarios');
+        $routes->post('agregar', 'GestionUser::agregarUsuario');
+        $routes->post('editar', 'GestionUser::editarUsuario');
+        $routes->post('eliminar', 'GestionUser::eliminarUsuario');
+        $routes->post('restaurar', 'GestionUser::restaurarUsuario');
+    });
 
 // Rutas de promoción
 $routes->get('promover/tecnico/(:num)', 'Auth::promoverATecnico/$1');
 $routes->get('promover/admin/(:num)', 'Auth::promoverAAdmin/$1');
 
-// ==============================================
-// RUTA POR SI ALGO REDIRIGE A 'user' (compatibilidad)
-// ==============================================
+// Rutas de compatibilidad
 $routes->get('user/dashboard', function() {
     return redirect()->to('/usuario/dashboard');
 });
